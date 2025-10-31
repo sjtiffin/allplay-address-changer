@@ -1,5 +1,5 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin 'daisyui' {
-	themes: lemonade;
+	themes: corporate;
 }

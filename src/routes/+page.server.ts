@@ -30,15 +30,15 @@ export const actions = {
         					email
         					createdAt
         					shippingAddress {
-          					name
-          					address1
-          					address2
-          					city
-          					province
-          					zip
-          					country
-          					phone
-        				}
+          						name
+          						address1
+          						address2
+          						city
+          						province
+          						zip
+          						country
+          						phone
+        					}
 				        lineItems(first: 250) {
 				          edges {
 				            node {
@@ -88,9 +88,12 @@ export const actions = {
 			let html = '<h1>Your Orders</h1>';
 			html += '<table border="1" style="border-collapse: collapse; width: 100%;">';
 			html +=
-				'<tr><th style="padding: 8px;">Order</th><th style="padding: 8px;">Email</th><th style="padding: 8px;">Name</th><th style="padding: 8px;">Shipping Address</th><th style="padding: 8px;">Items</th><th style="padding: 8px;">Fulfillments</th></tr>';
+				'<tr><th style="padding: 8px;">Order</th><th style="padding: 8px;">Email</th><th style="padding: 8px;">Name</th><th style="padding: 8px;">Shipping Address</th><th style="padding: 8px;">Items</th><th style="padding: 8px;">Fulfillments</th><th style="padding: 8px;">Update Link</th></tr>';
 
 			orders.forEach((order: any) => {
+				// Extract slug from order id (e.g., "gid://shopify/Order/6499293397185" -> "6499293397185")
+				const slug = order.id.split('/').pop();
+
 				// Customer Name and Shipping Address
 				const addr = order.shippingAddress;
 				const customerName = addr?.name || 'N/A';
@@ -119,7 +122,7 @@ export const actions = {
 					})
 					.join('<br>');
 
-				html += `<tr><td style="padding: 8px;">${order.name}</td><td style="padding: 8px;">${order.email}</td><td style="padding: 8px;">${customerName}</td><td style="padding: 8px;">${addressStr}</td><td style="padding: 8px;">${itemsStr || 'N/A'}</td><td style="padding: 8px;">${fulfillStr || 'N/A'}</td></tr>`;
+				html += `<tr><td style="padding: 8px;">${order.name}</td><td style="padding: 8px;">${order.email}</td><td style="padding: 8px;">${customerName}</td><td style="padding: 8px;">${addressStr}</td><td style="padding: 8px;">${itemsStr || 'N/A'}</td><td style="padding: 8px;">${fulfillStr || 'N/A'}</td><td style="padding: 8px;"><a href="https://allplay-address-changer.sarajtiffin.workers.dev/change-address/${slug}">Update Address</a></td></tr>`;
 			});
 
 			html += '</table>';
@@ -128,7 +131,7 @@ export const actions = {
 
 			const { error } = await resend.emails.send({
 				from: 'Sara Tiffin <sara@sjtiffin.dev>',
-				to: email as string,
+				to: 'sarajtiffin@gmail.com',
 				subject: 'Your Order Information',
 				html: html
 			});
@@ -137,6 +140,8 @@ export const actions = {
 				console.error('Resend error:', error);
 				return fail(500, { error: 'Error sending email' });
 			}
+
+			return { success: true };
 		} catch (error) {
 			console.error('Shopify API error: ', error);
 			return fail(500, { error: 'Failed to fetch orders, please try again' });
