@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	export let form;
 </script>
 
@@ -9,7 +10,7 @@
 	You'll be provided with a list of order information and one or more links to change your address.
 </p>
 
-<form method="POST" class="mx-auto w-full max-w-md px-4">
+<form method="POST" class="mx-auto w-full max-w-md px-4" use:enhance>
 	<div class="join w-full">
 		<div class="w-full">
 			<label class="validator input join-item w-full">

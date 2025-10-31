@@ -138,11 +138,6 @@ export const actions = {
 				console.error('Resend error:', error);
 				return fail(500, { error: 'Error sending email' });
 			}
-
-			console.log(orders);
-
-			// Return orders for display in the form
-			return { orders };
 		} catch (error) {
 			console.error('Shopify API error: ', error);
 			return fail(500, { error: 'Failed to fetch orders, please try again' });
