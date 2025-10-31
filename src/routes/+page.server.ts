@@ -16,7 +16,7 @@ export const actions = {
 
 		try {
 			const client = createAdminApiClient({
-				storeDomain: env.SHOPIFY_STORE_DOMAIN!,
+				storeDomain: 'boardgametables.myshopify.com',
 				accessToken: env.SHOPIFY_ACCESS_TOKEN!,
 				apiVersion: API_VERSION!
 			});
