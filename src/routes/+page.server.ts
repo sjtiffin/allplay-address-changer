@@ -1,8 +1,7 @@
 import type { Actions } from './$types';
 import { createAdminApiClient } from '@shopify/admin-api-client';
-import { env } from '$env/dynamic/private';
+import { SHOPIFY_ACCESS_TOKEN, API_VERSION, RESEND_API_KEY } from '$env/static/private';
 import { fail } from '@sveltejs/kit';
-import { API_VERSION } from '$env/static/private';
 import { Resend } from 'resend';
 
 export const actions = {
@@ -17,7 +16,7 @@ export const actions = {
 		try {
 			const client = createAdminApiClient({
 				storeDomain: 'boardgametables.myshopify.com',
-				accessToken: env.SHOPIFY_ACCESS_TOKEN!,
+				accessToken: SHOPIFY_ACCESS_TOKEN!,
 				apiVersion: API_VERSION!
 			});
 
@@ -125,7 +124,7 @@ export const actions = {
 
 			html += '</table>';
 
-			const resend = new Resend(env.RESEND_API_KEY);
+			const resend = new Resend(RESEND_API_KEY);
 
 			const { error } = await resend.emails.send({
 				from: 'Sara Tiffin <sara@sjtiffin.dev>',
