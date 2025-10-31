@@ -16,6 +16,16 @@
 	},
 	"observability": {
 		"enabled": true
+	},
+	"vars": {
+		"env": {
+			"production": {
+				"vars": {
+					"SHOPIFY_STORE_DOMAIN": "boardgametables.myshopify.com",
+					"API_VERSION": "2025-10"
+				}
+			}
+		}
 	}
 	/**
 	 * Smart Placement
