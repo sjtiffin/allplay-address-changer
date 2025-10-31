@@ -128,7 +128,7 @@ export const actions = {
 
 			const { error } = await resend.emails.send({
 				from: 'Sara Tiffin <sara@sjtiffin.dev>',
-				to: 'sarajtiffin@gmail.com',
+				to: email as string,
 				subject: 'Your Order Information',
 				html: html
 			});
